@@ -1,0 +1,123 @@
+<div class="my-3">
+  <a routerLink="create" class="btn btn-primary text-white w-25 " data-bs-toggle="modal"
+    data-bs-target="#createModal">Tạo dự án mới</a>
+  <div class="float-end">
+    <input type="text" placeholder="Tìm kiếm dự án" class="form-control">
+  </div>
+</div>
+<table class="table table-hover table-striped ">
+  <thead>
+    <tr>
+      <th scope="col">Mã dự án</th>
+      <th scope="col">Tên dự án</th>
+      <th scope="col">Ngày bắt đầu</th>
+      <th scope="col">Ngày kết thúc </th>
+      <th scope="col">Số lượng thành viên</th>
+      <th>Trạng thái</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody *ngIf="projectList && projectList.length > 0">
+    <tr *ngFor="let project of projectList">
+      <th scope="row">{{project.id}}</th>
+      <td>{{project.projectName}}</td>
+      <td>{{project.createdAt}}</td>
+      <td>{{project.updatedAt}}</td>
+      <td>{{[project.members]}}</td>
+      <td>{{project.status}}</td>
+      <td class="d-flex">
+        <a [routerLink]="['/projects',project.id,'edit']" class="btn btn-info text-white mx-3 w-50"
+          data-bs-toggle="modal" data-bs-target="#editModal" (click)="getOneProject(project.id)">Sửa</a>
+        <a class="btn btn-info text-white w-50" (click)="handleDeleteProject(project.id)">Xóa</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Modal edit -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:600px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Cập nhật dự án</h5>
+        <a type="button" class="btn-close" routerLink="/projects" data-bs-dismiss="modal" aria-label="Close"></a>
+      </div>
+      <div class="modal-body">
+        <form action="" #formUpdate="ngForm">
+          <div class="mb-3 row">
+            <label for="projectName" class="col-sm-2 col-form-label">Tên dự án</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="projectName" id="projectName" ngModel
+                [(ngModel)]="projectName">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="members" class="col-sm-2 col-form-label">Số lượng thành viên</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="members" id="members" ngModel [(ngModel)]="members">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="status" class="col-sm-2 col-form-label">Trạng thái</label>
+            <div class="col-sm-10">
+              <select name="status" id="status" ngModel [(ngModel)]="status">
+                <option value="Chưa hoàn thành">Chưa hoàn thành</option>
+                <option value="Đã hoàn thành">Đã hoàn thành</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a routerLink="/projects" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</a>
+            <a type="button" routerLink="/projects" class="btn btn-primary" (click)="handleEditProject()"
+              data-bs-dismiss="modal">Cập nhật dự
+              án</a>
+          </div>
+          <p>{{formUpdate.value | json }} </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal create-->
+<div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="width:600px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thêm dự án mới</h5>
+        <a routerLink="/projects" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="formCreateSubmit()" #formCreate="ngForm" action="">
+          <div class="mb-3 row">
+            <label for="projectName" class="col-sm-2 col-form-label">Tên dự án</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="projectName" name="projectName" required ngModel
+                #checkProjectName="ngModel">
+              <div class="col alert alert-danger" role="alert"
+                *ngIf="checkProjectName.errors?.['required'] && checkProjectName?.touched">
+                Bạn phải nhập tên dự án!
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="members" class="col-sm-2 col-form-label">Số lượng thành viên</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="members" id="members" required ngModel
+                #checkMembers="ngModel">
+              <div class="col alert alert-danger" role="alert"
+                *ngIf="checkMembers.errors?.['required'] && checkMembers?.touched">
+                Bạn phải nhập số lượng thành viên!
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a routerLink="/projects" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</a>
+            <button routerLink="/projects" type="button" (click)="formCreateSubmit()" class="btn btn-primary"
+              data-bs-dismiss="modal" [disabled]="formCreate.invalid">Thêm dự án</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
