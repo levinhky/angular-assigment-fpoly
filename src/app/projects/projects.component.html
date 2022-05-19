@@ -2,7 +2,8 @@
   <a routerLink="create" class="btn btn-primary text-white w-25 " data-bs-toggle="modal"
     data-bs-target="#createModal">Tạo dự án mới</a>
   <div class="float-end">
-    <input type="text" placeholder="Tìm kiếm dự án" class="form-control">
+    <input type="text" placeholder="Tìm kiếm dự án" class="form-control" [(ngModel)]="searchText"
+      (input)="handleSearchProject()">
   </div>
 </div>
 <table class="table table-hover table-striped ">
@@ -13,25 +14,32 @@
       <th scope="col">Ngày bắt đầu</th>
       <th scope="col">Ngày kết thúc </th>
       <th scope="col">Số lượng thành viên</th>
+      <th scope="col">Nhóm trưởng</th>
       <th>Trạng thái</th>
       <th></th>
     </tr>
   </thead>
-  <tbody *ngIf="projectList && projectList.length > 0">
+  <tbody *ngIf="projectList && projectList.length > 0;else noData">
     <tr *ngFor="let project of projectList">
       <th scope="row">{{project.id}}</th>
-      <td>{{project.projectName}}</td>
-      <td>{{project.createdAt}}</td>
+      <td>{{project.projectName | uppercase }}</td>
+      <td>{{project.startDate}}</td>
       <td>{{project.updatedAt}}</td>
       <td>{{[project.members]}}</td>
+      <td>{{[project.leader]}}</td>
       <td>{{project.status}}</td>
       <td class="d-flex">
-        <a [routerLink]="['/projects',project.id,'edit']" class="btn btn-info text-white mx-3 w-50"
+        <a [routerLink]="['/projects','edit',project.id]" class="btn btn-info text-white mx-3 w-50"
           data-bs-toggle="modal" data-bs-target="#editModal" (click)="getOneProject(project.id)">Sửa</a>
         <a class="btn btn-info text-white w-50" (click)="handleDeleteProject(project.id)">Xóa</a>
       </td>
     </tr>
   </tbody>
+  <ng-template #noData>
+    <p class="text-center fs-5 my-3" style="border:none">
+      Không tìm thấy dự án nào!
+    </p>
+  </ng-template>
 </table>
 
 <!-- Modal edit -->
@@ -58,6 +66,18 @@
             </div>
           </div>
           <div class="mb-3 row">
+            <label for="startDate" class="col-sm-2 col-form-label">Ngày bắt đầu</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="startDate" id="startDate" ngModel [(ngModel)]="startDate">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="leader" class="col-sm-2 col-form-label">Nhóm trưởng</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="leader" id="leader" ngModel [(ngModel)]="leader">
+            </div>
+          </div>
+          <div class="mb-3 row">
             <label for="status" class="col-sm-2 col-form-label">Trạng thái</label>
             <div class="col-sm-10">
               <select name="status" id="status" ngModel [(ngModel)]="status">
@@ -72,7 +92,6 @@
               data-bs-dismiss="modal">Cập nhật dự
               án</a>
           </div>
-          <p>{{formUpdate.value | json }} </p>
         </form>
       </div>
     </div>
@@ -89,11 +108,12 @@
       </div>
       <div class="modal-body">
         <form (ngSubmit)="formCreateSubmit()" #formCreate="ngForm" action="">
+
           <div class="mb-3 row">
             <label for="projectName" class="col-sm-2 col-form-label">Tên dự án</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="projectName" name="projectName" required ngModel
-                #checkProjectName="ngModel">
+                #checkProjectName="ngModel" [(ngModel)]="project.projectName">
               <div class="col alert alert-danger" role="alert"
                 *ngIf="checkProjectName.errors?.['required'] && checkProjectName?.touched">
                 Bạn phải nhập tên dự án!
@@ -104,13 +124,36 @@
             <label for="members" class="col-sm-2 col-form-label">Số lượng thành viên</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" name="members" id="members" required ngModel
-                #checkMembers="ngModel">
+                #checkMembers="ngModel" [(ngModel)]="project.members">
               <div class="col alert alert-danger" role="alert"
                 *ngIf="checkMembers.errors?.['required'] && checkMembers?.touched">
                 Bạn phải nhập số lượng thành viên!
               </div>
             </div>
           </div>
+          <div class="mb-3 row">
+            <label for="startDate" class="col-sm-2 col-form-label">Ngày bắt đầu</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="startDate" name="startDate" required ngModel
+                #checkStartDate="ngModel" [(ngModel)]="project.startDate">
+              <div class="col alert alert-danger" role="alert"
+                *ngIf="checkStartDate.errors?.['required'] && checkStartDate?.touched">
+                Bạn phải nhập ngày bắt đầu!
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="leader" class="col-sm-2 col-form-label">Nhóm trưởng</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="leader" name="leader" required ngModel #checkLeader="ngModel"
+                [(ngModel)]="project.leader">
+              <div class="col alert alert-danger" role="alert"
+                *ngIf="checkLeader.errors?.['required'] && checkLeader?.touched">
+                Bạn phải nhập tên nhóm trưởng!
+              </div>
+            </div>
+          </div>
+
           <div class="modal-footer">
             <a routerLink="/projects" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</a>
             <button routerLink="/projects" type="button" (click)="formCreateSubmit()" class="btn btn-primary"

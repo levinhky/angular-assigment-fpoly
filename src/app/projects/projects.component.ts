@@ -10,13 +10,22 @@ import { IProject } from '../project';
   styleUrls: ['./projects.component.css'],
 })
 export class ProjectsComponent implements OnInit {
-  projectList: IProject[] | any = [];
-  projectId: number = 0;
   @ViewChild('formCreate') formCreate: NgForm | any;
   @ViewChild('formUpdate') formUpdate: NgForm | any;
+
+  projectList: IProject[] | any = [];
+  newProjectList: IProject[] | any = [];
+
+  projectId: number = 0;
   projectName: string = '';
   members: number = 0;
   status: string = '';
+  startDate: string = '';
+  leader: string = '';
+
+  searchText: string = '';
+
+  project = <IProject>{};
 
   constructor(
     private route: ActivatedRoute,
@@ -24,25 +33,27 @@ export class ProjectsComponent implements OnInit {
   ) {}
 
   getOneProject(projectId: number) {
-    this.projectService.getOneProject(projectId).subscribe((project: any) => {
-      this.projectName = project.projectName;
-      this.members = project.members;
-      this.status = project.status;
-      this.projectId = project.id;
+    this.projectService.getOneProject(projectId).subscribe((p: any) => {
+      this.projectName = p.projectName;
+      this.members = p.members;
+      this.status = p.status;
+      this.startDate = p.startDate;
+      this.leader = p.leader;
+      this.projectId = p.id;
     });
   }
 
   handleEditProject() {
     this.projectService
       .editProject(this.formUpdate.value, this.projectId)
-      .subscribe((project) => {
+      .subscribe((p) => {
         this.getAllProjects();
       });
   }
 
   handleDeleteProject(projectId: number) {
     if (window.confirm('Bạn có muốn xóa dự án này ?')) {
-      this.projectService.deleteProject(projectId).subscribe((project) => {
+      this.projectService.deleteProject(projectId).subscribe((p) => {
         this.getAllProjects();
       });
     }
@@ -52,19 +63,27 @@ export class ProjectsComponent implements OnInit {
     this.projectService.getAllProjects().subscribe(
       (projects) => {
         this.projectList = projects;
+        this.newProjectList = projects;
       },
       (err) => console.log(err)
     );
   }
 
+  // Add new project
   formCreateSubmit() {
-    let data = this.formCreate.value;
-    data.status = 'Chưa hoàn thành';
+    this.project.status = 'Chưa hoàn thành';
 
-    this.projectService.createProject(data).subscribe((projects) => {
+    this.projectService.createProject(this.project).subscribe((p) => {
       this.getAllProjects();
     });
     this.formCreate.reset();
+  }
+
+  handleSearchProject() {
+    const searchText = this.searchText.trim().toLowerCase();
+    this.projectList = this.newProjectList.filter((p: any) => {
+      return p.projectName.trim().toLowerCase().includes(searchText);
+    });
   }
 
   ngOnInit(): void {

@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IProject } from './project';
@@ -10,23 +11,23 @@ export class ProjectService {
 
   constructor(private httpService: HttpClient) {}
 
-  getAllProjects() {
-    return this.httpService.get(this.url);
+  getAllProjects(): Observable<IProject[]> {
+    return this.httpService.get<IProject[]>(this.url);
   }
 
-  getOneProject(projectId: number) {
-    return this.httpService.get(this.url + projectId);
+  getOneProject(projectId: number): Observable<IProject> {
+    return this.httpService.get<IProject>(this.url + projectId);
   }
 
-  deleteProject(projectId: number) {
-    return this.httpService.delete(this.url + projectId);
+  deleteProject(projectId: number): Observable<IProject> {
+    return this.httpService.delete<IProject>(this.url + projectId);
   }
 
-  createProject(data: IProject) {
-    return this.httpService.post(this.url, data);
+  createProject(data: IProject): Observable<IProject> {
+    return this.httpService.post<IProject>(this.url, data);
   }
 
-  editProject(data: IProject, projectId: number) {
-    return this.httpService.put(this.url + projectId, data);
+  editProject(data: IProject, projectId: number): Observable<IProject> {
+    return this.httpService.put<IProject>(this.url + projectId, data);
   }
 }

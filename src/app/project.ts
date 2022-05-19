@@ -1,5 +1,7 @@
 export interface IProject {
-  projectName: string;
-  members: number;
-  status: string;
+  projectName?: string;
+  members?: number;
+  leader?: string;
+  startDate?: string;
+  status?: string;
 }
