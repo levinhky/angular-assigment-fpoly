@@ -17,18 +17,18 @@ export class TasksComponent implements OnInit {
     private employeesService: EmployeesService
   ) {}
 
-  taskList: ITask = {};
+  taskList: ITask[] = [];
   employeeList: IEmployee[] = [];
-  isNotFound: boolean = false;
+  task = <ITask>{};
 
-  getOneTask() {
-    const taskId = this.route.snapshot.params['id'];
-    this.taskService.getOneTask(taskId).subscribe(
-      (task) => {
-        if (task) this.taskList = task;
+  getTaskByProjectId() {
+    const projectId = +this.route.snapshot.params['id'];
+    this.taskService.getTaskByProjectId(projectId).subscribe(
+      (tasks) => {
+        this.taskList = tasks;
       },
       (err) => {
-        this.isNotFound = true;
+        console.log(err);
       }
     );
   }
@@ -39,8 +39,17 @@ export class TasksComponent implements OnInit {
     });
   }
 
+  formCreateSubmit() {
+    const projectId = this.route.snapshot.params['id'];
+    this.task.projectId = +projectId;
+    this.task.taskStatus = 'Chưa hoàn thành';
+    this.taskService.createTask(this.task).subscribe((t) => {
+      this.getTaskByProjectId();
+    });
+  }
+
   ngOnInit(): void {
-    this.getOneTask();
+    this.getTaskByProjectId();
     this.getAllEmployee();
   }
 }

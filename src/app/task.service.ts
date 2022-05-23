@@ -19,6 +19,10 @@ export class TaskService {
     return this.httpService.get<ITask>(this.url + taskId);
   }
 
+  getTaskByProjectId(projectId: number): Observable<ITask[]> {
+    return this.httpService.get<ITask[]>(`${this.url}?projectId=${projectId}`);
+  }
+
   deleteTask(taskId: number): Observable<ITask> {
     return this.httpService.delete<ITask>(this.url + taskId);
   }
