@@ -1,3 +1,5 @@
+import { TasksComponent } from './tasks/tasks.component';
+import { EmployeesComponent } from './employees/employees.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -19,6 +21,16 @@ const routes: Routes = [
   },
   { path: 'signin', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
+  {
+    path: 'employees',
+    component: EmployeesComponent,
+    children: [
+      { path: 'create', component: EmployeesComponent },
+      { path: 'edit/:id', component: EmployeesComponent },
+    ],
+  },
+  { path: 'tasks', component: TasksComponent },
+  { path: 'tasks/:id', component: TasksComponent },
   { path: 'introduce', component: IntroduceComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent },

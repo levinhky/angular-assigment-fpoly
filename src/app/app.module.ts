@@ -12,6 +12,8 @@ import { IntroduceComponent } from './introduce/introduce.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { EmployeesComponent } from './employees/employees.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { ProjectsComponent } from './projects/projects.component';
     SigninComponent,
     SignupComponent,
     ProjectsComponent,
+    EmployeesComponent,
+    TasksComponent,
   ],
   imports: [
     BrowserModule,

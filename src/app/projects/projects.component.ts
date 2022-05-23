@@ -17,11 +17,6 @@ export class ProjectsComponent implements OnInit {
   newProjectList: IProject[] | any = [];
 
   projectId: number = 0;
-  projectName: string = '';
-  members: number = 0;
-  status: string = '';
-  startDate: string = '';
-  leader: string = '';
 
   searchText: string = '';
 
@@ -33,13 +28,9 @@ export class ProjectsComponent implements OnInit {
   ) {}
 
   getOneProject(projectId: number) {
-    this.projectService.getOneProject(projectId).subscribe((p: any) => {
-      this.projectName = p.projectName;
-      this.members = p.members;
-      this.status = p.status;
-      this.startDate = p.startDate;
-      this.leader = p.leader;
-      this.projectId = p.id;
+    this.projectService.getOneProject(projectId).subscribe((project: any) => {
+      this.project = project;
+      this.projectId = project.id;
     });
   }
 
