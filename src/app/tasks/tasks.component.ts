@@ -1,7 +1,8 @@
+import { NgForm } from '@angular/forms';
 import { EmployeesService } from './../employees.service';
 import { TaskService } from './../task.service';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ITask } from '../task';
 import { IEmployee } from '../employee';
 
@@ -17,9 +18,37 @@ export class TasksComponent implements OnInit {
     private employeesService: EmployeesService
   ) {}
 
+  @ViewChild('formCreate') formCreate: NgForm | any;
+
   taskList: ITask[] = [];
   employeeList: IEmployee[] = [];
+  priorityList = [
+    {
+      id: 1,
+      name: 'Cao',
+    },
+    {
+      id: 2,
+      name: 'Trung Bình',
+    },
+    {
+      id: 3,
+      name: 'Thấp',
+    },
+  ];
+  statusList = [
+    {
+      id: 1,
+      name: 'Chưa hoàn thành',
+    },
+    {
+      id: 2,
+      name: 'Đã hoàn thành',
+    },
+  ];
+
   task = <ITask>{};
+  taskId: number = 0;
 
   getTaskByProjectId() {
     const projectId = +this.route.snapshot.params['id'];
@@ -31,6 +60,26 @@ export class TasksComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  getOneTask(taskId: number | any) {
+    this.taskService.getOneTask(taskId).subscribe((task) => {
+      this.task = task;
+      this.taskId = +task.id!;
+    });
+  }
+
+  handleDeleteTask(taskId: number | any) {
+    this.taskService.deleteTask(taskId).subscribe((t) => {
+      this.getTaskByProjectId();
+    });
+    console.log(taskId);
+  }
+
+  handleEditTask() {
+    this.taskService.editTask(this.task, this.taskId).subscribe((t) => {
+      this.getTaskByProjectId();
+    });
   }
 
   getAllEmployee() {
@@ -46,6 +95,7 @@ export class TasksComponent implements OnInit {
     this.taskService.createTask(this.task).subscribe((t) => {
       this.getTaskByProjectId();
     });
+    this.formCreate.reset();
   }
 
   ngOnInit(): void {

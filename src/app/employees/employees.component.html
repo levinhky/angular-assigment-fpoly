@@ -17,7 +17,7 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody *ngIf="employeeList && employeeList.length > 0;else noData">
     <tr *ngFor="let employee of employeeList">
       <th scope="row">{{employee.id}}</th>
       <th scope="row">{{employee.employeeName}}</th>
@@ -30,6 +30,11 @@
       </td>
     </tr>
   </tbody>
+  <ng-template #noData>
+    <p class="text-center fs-5 my-3" style="border:none">
+      Không tìm thấy nhân viên nào!
+    </p>
+  </ng-template>
 </table>
 
 <!-- Modal addEmployee -->
