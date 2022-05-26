@@ -2,7 +2,8 @@
   <a class="btn btn-info text-white w-25 " data-bs-toggle="modal" data-bs-target="#createModal">Tạo
     công việc mới</a>
   <div class="float-end">
-    <input type="text" placeholder="Tìm kiếm công việc" class="form-control">
+    <input type="text" placeholder="Tìm người thực hiện" class="form-control" [(ngModel)]="searchText"
+      (input)="getTaskByProjectId()">
   </div>
 </div>
 

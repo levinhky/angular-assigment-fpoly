@@ -10,6 +10,7 @@ import { EmployeesService } from '../employees.service';
 })
 export class EmployeesComponent implements OnInit {
   @ViewChild('formUpdate') formUpdate: NgForm | any;
+  @ViewChild('formCreate') formCreate: NgForm | any;
 
   employeeList: any = [];
   newEmployeeList: any = [];
@@ -52,6 +53,7 @@ export class EmployeesComponent implements OnInit {
     this.employeeService.createEmployee(this.employee).subscribe((em) => {
       this.getAllEmployee();
     });
+    this.formCreate.reset();
   }
 
   handleSearchEmployee() {

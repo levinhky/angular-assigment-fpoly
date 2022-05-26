@@ -21,6 +21,7 @@ export class TasksComponent implements OnInit {
   @ViewChild('formCreate') formCreate: NgForm | any;
 
   taskList: ITask[] = [];
+  newTaskList: ITask[] = [];
   employeeList: IEmployee[] = [];
   priorityList = [
     {
@@ -50,11 +51,18 @@ export class TasksComponent implements OnInit {
   task = <ITask>{};
   taskId: number = 0;
 
+  searchText: string = '';
+
   getTaskByProjectId() {
     const projectId = +this.route.snapshot.params['id'];
     this.taskService.getTaskByProjectId(projectId).subscribe(
       (tasks) => {
-        this.taskList = tasks;
+        this.taskList = tasks.filter((t) =>
+          t.taskImplementer
+            ?.trim()
+            ?.toLowerCase()
+            ?.includes(this.searchText.trim().toLowerCase())
+        );
       },
       (err) => {
         console.log(err);
