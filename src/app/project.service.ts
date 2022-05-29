@@ -7,7 +7,7 @@ import { IProject } from './project';
   providedIn: 'root',
 })
 export class ProjectService {
-  url = 'http://localhost:3000/projects/';
+  url = 'https://json-api-public.herokuapp.com/api/projects/';
 
   constructor(private httpService: HttpClient) {}
 

@@ -22,6 +22,8 @@ export class ProjectsComponent implements OnInit {
 
   project = <IProject>{};
 
+  isLoading: boolean = true;
+
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService
@@ -55,6 +57,7 @@ export class ProjectsComponent implements OnInit {
       (projects) => {
         this.projectList = projects;
         this.newProjectList = projects;
+        this.isLoading = false;
       },
       (err) => console.log(err)
     );

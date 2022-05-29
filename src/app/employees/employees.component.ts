@@ -1,7 +1,10 @@
-import { NgForm } from '@angular/forms';
 import { IEmployee } from './../employee';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmployeesService } from '../employees.service';
+
+import { NgForm, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-employees',
@@ -19,12 +22,17 @@ export class EmployeesComponent implements OnInit {
 
   searchText: string = '';
 
+  isLoading: boolean = true;
+
+  formEmployee!: FormGroup;
+
   constructor(private employeeService: EmployeesService) {}
 
   getAllEmployee() {
     this.employeeService.getAllEmployees().subscribe((employees) => {
       this.employeeList = employees;
       this.newEmployeeList = employees;
+      this.isLoading = false;
     });
   }
 
@@ -46,13 +54,18 @@ export class EmployeesComponent implements OnInit {
   }
 
   handleDeleteEmployee(employeeId: number) {
-    console.log(employeeId);
+    this.employeeService.deleteEmployee(employeeId).subscribe((em) => {
+      this.getAllEmployee();
+    });
   }
 
   formCreateSubmit() {
-    this.employeeService.createEmployee(this.employee).subscribe((em) => {
-      this.getAllEmployee();
-    });
+    this.employeeService
+      .createEmployee(this.formEmployee.value)
+      .subscribe((em) => {
+        this.getAllEmployee();
+      });
+
     this.formCreate.reset();
   }
 
@@ -65,6 +78,12 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.formEmployee = new FormGroup({
+      employeeName: new FormControl(Validators.required),
+      employeeBirthDate: new FormControl(Validators.required),
+      employeeAddress: new FormControl(Validators.required),
+    });
+
     this.getAllEmployee();
   }
 }

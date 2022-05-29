@@ -7,7 +7,7 @@ import { IEmployee } from './employee';
   providedIn: 'root',
 })
 export class EmployeesService {
-  url = 'http://localhost:3000/employees/';
+  url = 'https://json-api-public.herokuapp.com/api/employees/';
 
   constructor(private httpService: HttpClient) {}
 

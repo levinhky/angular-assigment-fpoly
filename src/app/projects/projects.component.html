@@ -37,6 +37,9 @@
       </td>
     </tr>
   </tbody>
+  <tr *ngIf="isLoading">
+    <h4 class="text-center text-primary">Loading...</h4>
+  </tr>
   <ng-template #noData>
     <p class="text-center fs-5 my-3" style="border:none">
       Không tìm thấy dự án nào!
@@ -117,10 +120,10 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="projectName" name="projectName" required ngModel
                 #checkProjectName="ngModel" [(ngModel)]="project.projectName">
-              <div class="col alert alert-danger" role="alert"
-                *ngIf="checkProjectName.errors?.['required'] && checkProjectName?.touched">
+              <em *ngIf="checkProjectName.invalid && checkProjectName.errors?.['required'] &&
+                checkProjectName?.touched" class="text-danger">
                 Bạn phải nhập tên dự án!
-              </div>
+              </em>
             </div>
           </div>
           <div class="mb-3 row">
@@ -128,10 +131,9 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" name="members" id="members" required ngModel
                 #checkMembers="ngModel" [(ngModel)]="project.members">
-              <div class="col alert alert-danger" role="alert"
-                *ngIf="checkMembers.errors?.['required'] && checkMembers?.touched">
+              <em class="text-danger" *ngIf="checkMembers.errors?.['required'] && checkMembers?.touched">
                 Bạn phải nhập số lượng thành viên!
-              </div>
+              </em>
             </div>
           </div>
           <div class="mb-3 row">
@@ -139,10 +141,9 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="startDate" name="startDate" required ngModel
                 #checkStartDate="ngModel" [(ngModel)]="project.startDate">
-              <div class="col alert alert-danger" role="alert"
-                *ngIf="checkStartDate.errors?.['required'] && checkStartDate?.touched">
+              <em class="text-danger" *ngIf="checkStartDate.errors?.['required'] && checkStartDate?.touched">
                 Bạn phải nhập ngày bắt đầu!
-              </div>
+              </em>
             </div>
           </div>
           <div class="mb-3 row">
@@ -150,10 +151,9 @@
             <div class="col-sm-10">
               <input type="text" class="form-control" id="leader" name="leader" required ngModel #checkLeader="ngModel"
                 [(ngModel)]="project.leader">
-              <div class="col alert alert-danger" role="alert"
-                *ngIf="checkLeader.errors?.['required'] && checkLeader?.touched">
+              <em class="text-danger" *ngIf="checkLeader.errors?.['required'] && checkLeader?.touched">
                 Bạn phải nhập tên nhóm trưởng!
-              </div>
+              </em>
             </div>
           </div>
 

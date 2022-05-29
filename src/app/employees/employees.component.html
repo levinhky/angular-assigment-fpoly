@@ -30,6 +30,11 @@
       </td>
     </tr>
   </tbody>
+
+  <tr *ngIf="isLoading">
+    <h4 class="text-center text-primary">Loading...</h4>
+  </tr>
+
   <ng-template #noData>
     <p class="text-center fs-5 my-3" style="border:none">
       Không tìm thấy nhân viên nào!
@@ -46,31 +51,36 @@
         <a routerLink="/employees" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></a>
       </div>
       <div class="modal-body">
-        <form (ngSubmit)="formCreateSubmit()" #formCreate="ngForm" action="">
+        <form (ngSubmit)="formCreateSubmit()" #formCreate="ngForm" [formGroup]="formEmployee">
 
           <div class="mb-3 row">
             <label for="employeeName" class="col-sm-2 col-form-label">Tên nhân viên</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="employeeName" name="employeeName" required ngModel
-                #checkEmployeeName="ngModel" [(ngModel)]="employee.employeeName">
-              <div class="col alert alert-danger" role="alert"
-                *ngIf="checkEmployeeName.errors?.['required'] && checkEmployeeName?.touched">
-                Bạn phải nhập tên nhân viên!
-              </div>
+              <input type="text" class="form-control" id="employeeName" name="employeeName"
+                formControlName="employeeName" required ngModel>
+              <em *ngIf="formEmployee.controls['employeeName']?.invalid" class="text-danger">
+                Bạn phải nhập tên nhân viên !
+              </em>
             </div>
           </div>
           <div class="mb-3 row">
             <label for="employeeBirthDate" class="col-sm-2 col-form-label">Ngày sinh</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" name="employeeBirthDate" id="employeeBirthDate" required ngModel
-                [(ngModel)]="employee.employeeBirthDate">
+              <input type="text" class="form-control" name="employeeBirthDate" id="employeeBirthDate"
+                formControlName="employeeBirthDate" required ngModel>
+              <em *ngIf="formEmployee.controls['employeeBirthDate']?.invalid" class="text-danger">
+                Bạn phải nhập ngày sinh !
+              </em>
             </div>
           </div>
           <div class="mb-3 row">
             <label for="employeeAddress" class="col-sm-2 col-form-label">Địa chỉ</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="employeeAddress" name="employeeAddress" required ngModel
-                [(ngModel)]="employee.employeeAddress">
+              <input type="text" class="form-control" id="employeeAddress" name="employeeAddress"
+                formControlName="employeeAddress" required ngModel>
+              <em *ngIf="formEmployee.controls['employeeAddress']?.invalid" class="text-danger">
+                Bạn phải nhập địa chỉ !
+              </em>
             </div>
           </div>
 

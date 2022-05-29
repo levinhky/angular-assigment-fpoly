@@ -7,7 +7,7 @@ import { ITask } from './task';
   providedIn: 'root',
 })
 export class TaskService {
-  url = 'http://localhost:3000/tasks/';
+  url = 'https://json-api-public.herokuapp.com/api/tasks/';
 
   constructor(private httpService: HttpClient) {}
 
