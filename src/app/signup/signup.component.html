@@ -1,23 +1,33 @@
 <h1 class="text-center">Sign up</h1>
-<form class="form-signup" #formSignUp="ngForm">
-  <div class="mb-3">
-    <label for="username" class="form-label">Username</label>
-    <input type="text" class="form-control" id="username" name="username" required [(ngModel)]="username"
-      #usernameErr="ngModel">
-  </div>
-  <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <input type="password" class="form-control" id="password" name="password" required [(ngModel)]="password"
-      #passErr="ngModel">
-  </div>
+<form class="form-signup" [formGroup]="formSignUp">
   <div class="mb-3">
     <label for="name" class="form-label">Name</label>
-    <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="name" #nameErr="ngModel">
+    <input type="text" class="form-control" id="name" name="name" formControlName="name">
+    <em *ngIf="formSignUp.controls['name']?.errors" class="text-danger">
+      Bạn phải nhập trường này!
+    </em>
   </div>
   <div class="mb-3">
     <label for="adress" class="form-label">Adress</label>
-    <input type="text" class="form-control" id="adress" name="adress" required [(ngModel)]="adress"
-      #adressErr="ngModel">
+    <input type="text" class="form-control" id="adress" name="adress" formControlName="adress">
+    <em *ngIf="formSignUp.controls['adress']?.errors" class="text-danger">
+      Bạn phải nhập trường này!
+    </em>
   </div>
-  <button type="submit" class="btn btn-primary">Sign up</button>
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" name="username" formControlName="username">
+    <em *ngIf="formSignUp.controls['username']?.errors" class="text-danger">
+      Bạn phải nhập trường này!
+    </em>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="password" formControlName="password">
+    <em *ngIf="formSignUp.controls['password']?.errors?.['minlength']['actualLength']<
+      formSignUp.controls['password']?.errors?.['minlength']['requiredLength']" class="text-danger">
+      Mật khẩu tối thiểu 8 ký tự!
+    </em>
+  </div>
+  <button type="submit" class="btn btn-primary" [disabled]="formSignUp.invalid">Sign up</button>
 </form>
