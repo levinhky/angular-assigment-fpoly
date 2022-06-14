@@ -8,6 +8,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { SigninComponent } from './signin/signin.component';
 import { SignupComponent } from './signup/signup.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
     children: [
       { path: 'create', component: ProjectsComponent },
       { path: 'edit/:id', component: ProjectsComponent },
+      { path: 'delete', component: ProjectsComponent },
     ],
   },
   { path: 'signin', component: SigninComponent },
@@ -27,6 +29,7 @@ const routes: Routes = [
     children: [
       { path: 'create', component: EmployeesComponent },
       { path: 'edit/:id', component: EmployeesComponent },
+      { path: 'delete', component: EmployeesComponent },
     ],
   },
   { path: 'tasks', component: TasksComponent },

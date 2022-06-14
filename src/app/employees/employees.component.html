@@ -26,7 +26,7 @@
       <td class="d-flex">
         <a [routerLink]="['/employees','edit',employee.id]" class="btn btn-info text-white mx-3 w-50"
           data-bs-toggle="modal" data-bs-target="#editModal" (click)="getOneEmployee(employee.id)">Sửa</a>
-        <a class="btn btn-info text-white w-50" (click)="handleDeleteEmployee(employee.id)">Xóa</a>
+        <a class="btn btn-info text-white w-50" routerLink="delete" (click)="handleDeleteEmployee(employee.id)">Xóa</a>
       </td>
     </tr>
   </tbody>

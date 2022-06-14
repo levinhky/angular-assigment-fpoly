@@ -12,15 +12,19 @@
     <label for="password" class="form-label">Password</label>
     <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" #passErr="ngModel"
       required minlength="6">
-    <em *ngIf="passErr.errors?.['minlength']['actualLength']<passErr.errors?.['minlength']['requiredLength']" class="
+    <em *ngIf="passErr?.errors?.['minlength']['actualLength']<passErr?.errors?.['minlength']['requiredLength']" class="
       text-danger">
       Password dài từ 6 ký tự ha!
     </em>
   </div>
+  <em *ngIf="errMess" class="
+  text-danger">
+    Không tìm thấy tài khoản!
+  </em>
   <div class="mb-3 form-check">
     <input type="checkbox" class="form-check-input" id="exampleCheck1">
     <label class="form-check-label" for="exampleCheck1">Remember me</label>
   </div>
-  <button type="submit" class="btn btn-primary" [disabled]="formSignIn.invalid">Login</button>
-  <p> {{usernameErr.errors | json}} </p>
+  <button type="submit" class="btn btn-primary" [disabled]="formSignIn.invalid"
+    (click)="handleLogin(formSignIn.value)">Login</button>
 </form>

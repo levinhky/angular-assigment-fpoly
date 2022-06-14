@@ -24,9 +24,11 @@
             Quản lý tài khoản
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item text-body" routerLink="/signin">Đăng nhập</a></li>
-            <li><a class="dropdown-item text-body" routerLink="/signup">Đăng ký</a></li>
+            <li *ngIf="!logged()"><a class="dropdown-item text-body" routerLink="/signin">Đăng nhập</a></li>
+            <li *ngIf="!logged()"><a class="dropdown-item text-body" routerLink="/signup">Đăng ký</a></li>
+            <li *ngIf="logged()"><span class="dropdown-item text-body">{{user.username}}</span></li>
             <li><a class="dropdown-item text-body" routerLink="">Quên mật khẩu?</a></li>
+            <li *ngIf="logged()"><a class="dropdown-item text-body" routerLink="" (click)="logout()">Đăng xuất</a></li>
           </ul>
         </li>
         <li class="nav-item">
