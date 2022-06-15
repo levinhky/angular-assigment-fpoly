@@ -5,6 +5,7 @@ import { EmployeesService } from '../employees.service';
 import { NgForm, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-employees',
@@ -26,7 +27,10 @@ export class EmployeesComponent implements OnInit {
 
   formEmployee!: FormGroup;
 
-  constructor(private employeeService: EmployeesService) {}
+  constructor(
+    private employeeService: EmployeesService,
+    private auth: AuthService
+  ) {}
 
   getAllEmployee() {
     this.employeeService.getAllEmployees().subscribe((employees) => {
@@ -34,6 +38,10 @@ export class EmployeesComponent implements OnInit {
       this.newEmployeeList = employees;
       this.isLoading = false;
     });
+  }
+
+  logged() {
+    return this.auth.checkLogin();
   }
 
   getOneEmployee(employeeId: number) {

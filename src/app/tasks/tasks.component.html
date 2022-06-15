@@ -1,5 +1,5 @@
 <div class="my-3">
-  <a class="btn btn-info text-white w-25 " data-bs-toggle="modal" data-bs-target="#createModal">Tạo
+  <a *ngIf="logged()" class="btn btn-info text-white w-25 " data-bs-toggle="modal" data-bs-target="#createModal">Tạo
     công việc mới</a>
   <div class="float-end">
     <input type="text" placeholder="Tìm người thực hiện" class="form-control" [(ngModel)]="searchText"
@@ -29,7 +29,7 @@
       <td class="d-flex">
         <a class="btn btn-secondary text-white mx-3 w-50" data-bs-toggle="modal" data-bs-target="#editModal"
           (click)="getOneTask(task.id)">Sửa</a>
-        <a class="btn btn-secondary text-white w-50" (click)="handleDeleteTask(task.id)">Xóa</a>
+        <a *ngIf="logged()" class="btn btn-secondary text-white w-50" (click)="handleDeleteTask(task.id)">Xóa</a>
       </td>
     </tr>
   </tbody>

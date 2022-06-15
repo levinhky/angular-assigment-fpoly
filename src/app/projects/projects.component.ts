@@ -3,6 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { IProject } from '../project';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-projects',
@@ -26,8 +27,13 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private auth: AuthService
   ) {}
+
+  logged() {
+    return this.auth.checkLogin();
+  }
 
   getOneProject(projectId: number) {
     this.projectService.getOneProject(projectId).subscribe((project: any) => {

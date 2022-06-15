@@ -1,5 +1,5 @@
 <div class="my-3">
-  <a routerLink="create" class="btn btn-secondary text-white w-25 " data-bs-toggle="modal"
+  <a *ngIf="logged()" routerLink="create" class="btn btn-secondary text-white w-25 " data-bs-toggle="modal"
     data-bs-target="#addEmployee">Thêm nhân viên mới</a>
   <div class="float-end">
     <input type="text" placeholder="Tìm kiếm nhân viên" class="form-control" [(ngModel)]="searchText"
@@ -14,7 +14,7 @@
       <th scope="col">Tên nhân viên</th>
       <th scope="col">Ngày sinh</th>
       <th scope="col">Địa chỉ</th>
-      <th></th>
+      <th *ngIf="logged()"></th>
     </tr>
   </thead>
   <tbody *ngIf="employeeList && employeeList.length > 0;else noData">
@@ -23,7 +23,7 @@
       <th scope="row">{{employee.employeeName}}</th>
       <td>{{employee.employeeBirthDate}}</td>
       <td>{{employee.employeeAddress}}</td>
-      <td class="d-flex">
+      <td class="d-flex" *ngIf="logged()">
         <a [routerLink]="['/employees','edit',employee.id]" class="btn btn-info text-white mx-3 w-50"
           data-bs-toggle="modal" data-bs-target="#editModal" (click)="getOneEmployee(employee.id)">Sửa</a>
         <a class="btn btn-info text-white w-50" routerLink="delete" (click)="handleDeleteEmployee(employee.id)">Xóa</a>
@@ -57,7 +57,7 @@
             <label for="employeeName" class="col-sm-2 col-form-label">Tên nhân viên</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="employeeName" name="employeeName"
-                formControlName="employeeName" required ngModel>
+                formControlName="employeeName" required>
               <em *ngIf="formEmployee.controls['employeeName']?.invalid" class="text-danger">
                 Bạn phải nhập tên nhân viên !
               </em>
@@ -67,7 +67,7 @@
             <label for="employeeBirthDate" class="col-sm-2 col-form-label">Ngày sinh</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" name="employeeBirthDate" id="employeeBirthDate"
-                formControlName="employeeBirthDate" required ngModel>
+                formControlName="employeeBirthDate" required>
               <em *ngIf="formEmployee.controls['employeeBirthDate']?.invalid" class="text-danger">
                 Bạn phải nhập ngày sinh !
               </em>
@@ -77,7 +77,7 @@
             <label for="employeeAddress" class="col-sm-2 col-form-label">Địa chỉ</label>
             <div class="col-sm-10">
               <input type="text" class="form-control" id="employeeAddress" name="employeeAddress"
-                formControlName="employeeAddress" required ngModel>
+                formControlName="employeeAddress" required>
               <em *ngIf="formEmployee.controls['employeeAddress']?.invalid" class="text-danger">
                 Bạn phải nhập địa chỉ !
               </em>

@@ -1,5 +1,5 @@
 <div class="my-3">
-  <a routerLink="create" class="btn btn-primary text-white w-25 " data-bs-toggle="modal"
+  <a *ngIf="logged()" routerLink="create" class="btn btn-primary text-white w-25 " data-bs-toggle="modal"
     data-bs-target="#createModal">Tạo dự án mới</a>
   <div class="float-end">
     <input type="text" placeholder="Tìm kiếm dự án" class="form-control" [(ngModel)]="searchText"
@@ -17,7 +17,7 @@
       <th scope="col">Số lượng thành viên</th>
       <th scope="col">Nhóm trưởng</th>
       <th>Trạng thái</th>
-      <th></th>
+      <th *ngIf="logged()"></th>
     </tr>
   </thead>
   <tbody *ngIf="projectList && projectList.length > 0;else noData">
@@ -30,7 +30,7 @@
       <td>{{[project.members]}}</td>
       <td>{{[project.leader]}}</td>
       <td>{{project.status}}</td>
-      <td class="d-flex">
+      <td *ngIf="logged()" class="d-flex">
         <a [routerLink]="['/projects','edit',project.id]" class="btn btn-info text-white mx-3 w-50"
           data-bs-toggle="modal" data-bs-target="#editModal" (click)="getOneProject(project.id)">Sửa</a>
         <a class="btn btn-info text-white w-50" (click)="handleDeleteProject(project.id)">Xóa</a>

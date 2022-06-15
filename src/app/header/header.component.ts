@@ -7,22 +7,44 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  user: any = {};
+  user: any = null;
+  username: string = '';
+  newPassword: string = '';
+  isUsername: boolean = false;
+  idAccount: number = 0;
 
   constructor(private auth: AuthService) {}
 
-  ngOnInit(): void {
-    const userStore: any = localStorage.getItem('user');
-    this.user = JSON.parse(userStore);
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('token_expires');
+    localStorage.removeItem('user');
   }
 
   logged() {
     return this.auth.checkLogin();
   }
 
-  logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('token_expires');
-    localStorage.removeItem('user');
+  checkUsername() {
+    this.auth.checkUsername(this.username).subscribe((data: any) => {
+      if (data.length > 0) {
+        this.isUsername = true;
+        this.idAccount = data[0].id;
+      }
+    });
+  }
+
+  handleChangePassword() {
+    this.auth
+      .changePassword(this.newPassword, this.idAccount)
+      .subscribe((data) => {
+        alert('Đổi mật khẩu thành công!');
+        this.username = '';
+        this.newPassword = '';
+      });
+  }
+
+  ngOnInit(): void {
+    this.user = this.logged();
   }
 }

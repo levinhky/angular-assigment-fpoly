@@ -27,7 +27,9 @@
             <li *ngIf="!logged()"><a class="dropdown-item text-body" routerLink="/signin">Đăng nhập</a></li>
             <li *ngIf="!logged()"><a class="dropdown-item text-body" routerLink="/signup">Đăng ký</a></li>
             <li *ngIf="logged()"><span class="dropdown-item text-body">{{user.username}}</span></li>
-            <li><a class="dropdown-item text-body" routerLink="">Quên mật khẩu?</a></li>
+            <li><span class="dropdown-item text-body" data-bs-toggle="modal" data-bs-target="#openUsernameCheck">Quên
+                mật
+                khẩu?</span></li>
             <li *ngIf="logged()"><a class="dropdown-item text-body" routerLink="" (click)="logout()">Đăng xuất</a></li>
           </ul>
         </li>
@@ -45,3 +47,51 @@
     </div>
   </div>
 </nav>
+
+<!-- Modal username-->
+<div class="modal fade" id="openUsernameCheck" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Kiểm tra username</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="username" class="form-label">Nhập username để kiếm tra</label>
+          <input type="text" class="form-control" id="username" placeholder="Nhập username" [(ngModel)]="username">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="checkUsername()"
+          [attr.data-bs-target]="isUsername ? '#openPasswordReset' : null"
+          [attr.data-bs-toggle]="isUsername ? 'modal' : null">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal password-->
+<div class="modal fade" id="openPasswordReset" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Mật khẩu mới</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="username" class="form-label">Nhập mật khẩu mới</label>
+          <input type="text" class="form-control" id="username" placeholder="Nhập mật khẩu mới"
+            [(ngModel)]="newPassword">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="handleChangePassword()" data-bs-dismiss="modal">Save
+          changes</button>
+      </div>
+    </div>
+  </div>
+</div>

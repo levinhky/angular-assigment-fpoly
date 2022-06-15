@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class SigninComponent implements OnInit {
   password: string = '';
   errMess: boolean = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private _location: Location) {}
 
   handleLogin(formValue: any) {
     this.auth
@@ -23,9 +23,11 @@ export class SigninComponent implements OnInit {
           localStorage.setItem('token', res.jwtToken);
           localStorage.setItem('token_expires', res.expiresIn);
           localStorage.setItem('user', JSON.stringify(res.userInfo));
-          alert('Login successfuly!');
+          alert('Đăng nhập thành công!');
+          this._location.back();
         }
       });
+    formValue.reset();
   }
 
   ngOnInit(): void {}

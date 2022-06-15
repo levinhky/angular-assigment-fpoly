@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ITask } from '../task';
 import { IEmployee } from '../employee';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-tasks',
@@ -15,7 +16,8 @@ export class TasksComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private taskService: TaskService,
-    private employeesService: EmployeesService
+    private employeesService: EmployeesService,
+    private auth: AuthService
   ) {}
 
   @ViewChild('formCreate') formCreate: NgForm | any;
@@ -52,6 +54,10 @@ export class TasksComponent implements OnInit {
   taskId: number = 0;
 
   searchText: string = '';
+
+  logged() {
+    return this.auth.checkLogin();
+  }
 
   getTaskByProjectId() {
     const projectId = +this.route.snapshot.params['id'];

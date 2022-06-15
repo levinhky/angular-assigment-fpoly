@@ -23,28 +23,25 @@ export class AuthService {
 
   checkLogin() {
     const token = localStorage.getItem('token_expires') || '';
-    if (token === '') {
-      return false;
-    } else {
-      return true;
-    }
-    // const expiresAt = JSON.parse(token);
-    // return moment().isBefore(moment(expiresAt));
+    const userInfo = localStorage.getItem('user') || '';
+    return token == '' ? false : JSON.parse(userInfo);
   }
 
-  // getOneEmployee(employeeId: number): Observable<IEmployee> {
-  //   return this.httpService.get<IEmployee>(this.url + employeeId);
-  // }
+  signup(data: IAccount): Observable<IAccount> {
+    return this.httpService.post<IAccount>(this.url, data);
+  }
+
+  checkUsername(username: string): Observable<IAccount> {
+    return this.httpService.get<IAccount>(this.url + `?username=${username}`);
+  }
+
+  changePassword(newPassword: string, idAccount: number): Observable<IAccount> {
+    return this.httpService.patch<IAccount>(this.url + idAccount, {
+      password: newPassword,
+    });
+  }
 
   // deleteEmployee(employeeId: number): Observable<IEmployee> {
   //   return this.httpService.delete<IEmployee>(this.url + employeeId);
-  // }
-
-  // createEmployee(data: IEmployee): Observable<IEmployee> {
-  //   return this.httpService.post<IEmployee>(this.url, data);
-  // }
-
-  // editEmployee(data: IEmployee, employeeId: number): Observable<IEmployee> {
-  //   return this.httpService.put<IEmployee>(this.url + employeeId, data);
   // }
 }
