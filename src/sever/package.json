@@ -4,7 +4,8 @@
   "description": "sever nodejs",
   "main": "sever.js",
   "scripts": {
-    "start": "nodemon sever.js",
+    "start": "node sever.js",
+    "dev": "nodemon sever.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
