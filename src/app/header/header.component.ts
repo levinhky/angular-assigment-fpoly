@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
   newPassword: string = '';
   isUsername: boolean = false;
   idAccount: number = 0;
+  isError: boolean = false;
 
   constructor(private auth: AuthService) {}
 
@@ -29,7 +30,10 @@ export class HeaderComponent implements OnInit {
     this.auth.checkUsername(this.username).subscribe((data: any) => {
       if (data.length > 0) {
         this.isUsername = true;
+        this.isError = false;
         this.idAccount = data[0].id;
+      } else {
+        this.isError = true;
       }
     });
   }

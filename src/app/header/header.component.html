@@ -61,6 +61,9 @@
           <label for="username" class="form-label">Nhập username để kiếm tra</label>
           <input type="text" class="form-control" id="username" placeholder="Nhập username" [(ngModel)]="username">
         </div>
+        <em *ngIf="isError" class="text-danger">
+          Username không chính xác!
+        </em>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

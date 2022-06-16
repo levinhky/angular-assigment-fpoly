@@ -15,7 +15,6 @@ export class SignupComponent implements OnInit {
   handleSignUp() {
     this.formSignUp.value.role = 'member';
     this.authService.signup(this.formSignUp.value).subscribe((data) => {
-      console.log(data);
       alert('Đăng ký thành công!');
       this.formSignUp.reset();
     });
