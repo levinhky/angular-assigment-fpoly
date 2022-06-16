@@ -11,11 +11,8 @@ const PRIVATE_KEY = fs.readFileSync('private-key.txt');
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(exp.static('../../dist/angular'))
-
-app.get("/", (req, res) => {
-  res.sendFile('index.html', { root: __dirname })
-});
+app.get("/", (req, res) => { res.send("<h1>Hello World</h1>"); });
+console.log('dirname là:', __dirname);
 
 app.post('/login', async (req, res) => {
   const username = req.body.username;
