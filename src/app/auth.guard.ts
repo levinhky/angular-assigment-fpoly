@@ -22,8 +22,8 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.authService.checkLogin() == false) {
-      this.router.navigate(['signin']);
+    if (this.authService.checkRole() == false) {
+      alert('Bạn không có quyền truy cập!');
       return false;
     } else return true;
   }

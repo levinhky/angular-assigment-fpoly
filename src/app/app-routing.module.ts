@@ -31,6 +31,7 @@ const routes: Routes = [
       { path: 'edit/:id', component: EmployeesComponent },
       { path: 'delete', component: EmployeesComponent },
     ],
+    canActivate: [AuthGuard],
   },
   { path: 'tasks', component: TasksComponent },
   { path: 'tasks/:id', component: TasksComponent },

@@ -27,6 +27,12 @@ export class AuthService {
     return token == '' ? false : JSON.parse(userInfo);
   }
 
+  checkRole() {
+    const role = localStorage.getItem('user') || '';
+    const roleObj = JSON.parse(role);
+    return roleObj.role == 'admin' ? true : false;
+  }
+
   signup(data: IAccount): Observable<IAccount> {
     return this.httpService.post<IAccount>(this.url, data);
   }
